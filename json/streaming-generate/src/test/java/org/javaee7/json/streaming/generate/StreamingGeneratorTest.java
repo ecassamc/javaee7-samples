@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.javaee7.json.streaming.generate;
 
 import java.io.File;
@@ -35,11 +30,11 @@ public class StreamingGeneratorTest {
     @Deployment
     public static Archive<?> deploy() {
         File[] requiredLibraries = Maven.resolver().loadPomFromFile("pom.xml")
-                .resolve("org.json:json", "org.skyscreamer:jsonassert")
-                .withTransitivity().asFile();
+            .resolve("org.json:json", "org.skyscreamer:jsonassert")
+            .withTransitivity().asFile();
 
         return ShrinkWrap.create(WebArchive.class)
-                .addAsLibraries(requiredLibraries);
+            .addAsLibraries(requiredLibraries);
     }
 
     @Test
@@ -60,10 +55,10 @@ public class StreamingGeneratorTest {
         JsonGenerator gen = factory.createGenerator(w);
 
         gen
-                .writeStartObject()
-                .write("apple", "red")
-                .write("banana", "yellow")
-                .writeEnd();
+            .writeStartObject()
+            .write("apple", "red")
+            .write("banana", "yellow")
+            .writeEnd();
         gen.flush();
         JSONAssert.assertEquals("{\"apple\" : \"red\", \"banana\" : \"yellow\" }", w.toString(), JSONCompareMode.STRICT);
     }
@@ -75,14 +70,14 @@ public class StreamingGeneratorTest {
         JsonGenerator gen = factory.createGenerator(w);
 
         gen
-                .writeStartArray()
-                .writeStartObject()
-                .write("apple", "red")
-                .writeEnd()
-                .writeStartObject()
-                .write("banana", "yellow")
-                .writeEnd()
-                .writeEnd();
+            .writeStartArray()
+            .writeStartObject()
+            .write("apple", "red")
+            .writeEnd()
+            .writeStartObject()
+            .write("banana", "yellow")
+            .writeEnd()
+            .writeEnd();
         gen.flush();
         JSONAssert.assertEquals("[{\"apple\":\"red\"},{\"banana\":\"yellow\"}]", w.toString(), JSONCompareMode.STRICT);
     }
@@ -94,16 +89,17 @@ public class StreamingGeneratorTest {
         JsonGenerator gen = factory.createGenerator(w);
 
         gen
-                .writeStartObject()
-                .write("title", "The Matrix")
-                .write("year", 1999)
-                .writeStartArray("cast")
-                .write("Keanu Reaves")
-                .write("Laurence Fishburne")
-                .write("Carrie-Anne Moss")
-                .writeEnd()
-                .writeEnd();
+            .writeStartObject()
+            .write("title", "The Matrix")
+            .write("year", 1999)
+            .writeStartArray("cast")
+            .write("Keanu Reaves")
+            .write("Laurence Fishburne")
+            .write("Carrie-Anne Moss")
+            .writeEnd()
+            .writeEnd();
         gen.flush();
-        JSONAssert.assertEquals("{\"title\":\"The Matrix\",\"year\":1999,\"cast\":[\"Keanu Reaves\",\"Laurence Fishburne\",\"Carrie-Anne Moss\"]}", w.toString(), JSONCompareMode.STRICT);
+        JSONAssert.assertEquals("{\"title\":\"The Matrix\",\"year\":1999,\"cast\":[\"Keanu Reaves\",\"Laurence Fishburne\",\"Carrie-Anne Moss\"]}", w.toString(),
+            JSONCompareMode.STRICT);
     }
 }

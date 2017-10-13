@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package org.javaee7.jaxrs.endpoint;
 
 import static org.junit.Assert.assertEquals;
@@ -36,7 +30,7 @@ import org.junit.runners.MethodSorters;
 public class MyResourceTest {
 
     private static WebTarget target;
-    
+
     /**
      * Arquillian specific method for creating a file which can be deployed
      * while executing the test.
@@ -46,14 +40,14 @@ public class MyResourceTest {
     @Deployment(testable = false)
     public static WebArchive createDeployment() {
         WebArchive war = ShrinkWrap.create(WebArchive.class).
-                addClass(MyApplication.class).
-                addClass(Database.class).
-                addClass(MyResource.class);
+            addClass(MyApplication.class).
+            addClass(Database.class).
+            addClass(MyResource.class);
         System.out.println(war.toString(true));
-        
+
         return war;
     }
-    
+
     @ArquillianResource
     private URL base;
 
@@ -62,7 +56,7 @@ public class MyResourceTest {
         Client client = ClientBuilder.newClient();
         target = client.target(URI.create(new URL(base, "webresources/fruit").toExternalForm()));
     }
-    
+
     /**
      * Test of POST method, of class MyResource.
      */
@@ -109,7 +103,7 @@ public class MyResourceTest {
         target.path("banana").request().delete();
         String r = target.request().get(String.class);
         assertEquals("[apple]", r);
-        
+
         target.path("apple").request().delete();
         r = target.request().get(String.class);
         assertEquals("[]", r);

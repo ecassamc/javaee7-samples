@@ -53,7 +53,7 @@ public class LoggingInterceptor {
 
     @AroundInvoke
     public Object log(InvocationContext context)
-            throws Exception {
+        throws Exception {
         Logger.getLogger(getClass().getName()).info(context.getMethod().getName());
         Logger.getLogger(getClass().getName()).info(context.getParameters().toString());
         return context.proceed();

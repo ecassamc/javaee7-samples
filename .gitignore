@@ -5,6 +5,7 @@ target/
 libs/
 tmp/
 node_modules/
+jaxws/jaxws-client/src/main/
  
 # OS Files #
 .DS_Store
@@ -90,3 +91,13 @@ local.properties
  
 # PDT-specific
 .buildpath
+
+# Testing environment specific
+derby.log
+
+
+######################
+# Liberty tools
+######################
+
+.factorypath

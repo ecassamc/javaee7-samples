@@ -48,5 +48,5 @@ public class MyWaitingTask implements Runnable {
     public void run() {
         System.out.println("MyWaitingTask.run");
     }
-    
+
 }

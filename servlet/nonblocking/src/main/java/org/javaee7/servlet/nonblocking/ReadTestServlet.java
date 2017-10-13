@@ -52,7 +52,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Arun Gupta
  */
-@WebServlet(urlPatterns = {"/ReadTestServlet"}, asyncSupported=true)
+@WebServlet(urlPatterns = { "/ReadTestServlet" }, asyncSupported = true)
 public class ReadTestServlet extends HttpServlet {
 
     /**
@@ -66,7 +66,7 @@ public class ReadTestServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter output = response.getWriter()) {
             output.println("<html>");
@@ -85,7 +85,6 @@ public class ReadTestServlet extends HttpServlet {
         }
     }
 
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP
@@ -98,7 +97,7 @@ public class ReadTestServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -113,7 +112,7 @@ public class ReadTestServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         processRequest(request, response);
     }
 

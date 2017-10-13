@@ -52,7 +52,7 @@ public class EmployeeBean {
 
     @PersistenceContext
     EntityManager em;
-    
+
     public List<Employee> get() {
         return em.createNamedQuery("Employee.findAll", Employee.class).getResultList();
     }

@@ -49,7 +49,8 @@ import javax.transaction.Transactional;
 public class MyTaskWithTransaction implements Runnable {
 
     private int id;
-    @Inject MyTransactionScopedBean bean;
+    @Inject
+    MyTransactionScopedBean bean;
 
     public MyTaskWithTransaction() {
     }
@@ -71,10 +72,9 @@ public class MyTaskWithTransaction implements Runnable {
     public void run() {
         // a Call to a TX Scoped bean should fail if outside a tx
         try {
-           TestStatus.foundTransactionScopedBean = bean.isInTx();
-        }
-        catch(Exception e) {
-           e.printStackTrace();
+            TestStatus.foundTransactionScopedBean = bean.isInTx();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         TestStatus.latch.countDown();
     }

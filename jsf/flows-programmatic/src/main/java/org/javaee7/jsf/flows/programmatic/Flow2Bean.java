@@ -47,7 +47,7 @@ import javax.inject.Named;
  * @author Arun Gupta
  */
 @Named
-@FlowScoped(value="flow2")
+@FlowScoped(value = "flow2")
 public class Flow2Bean implements Serializable {
 
     public String getName() {
@@ -60,5 +60,5 @@ public class Flow2Bean implements Serializable {
 
     public String getHomeValue() {
         return "/index";
-    }    
+    }
 }

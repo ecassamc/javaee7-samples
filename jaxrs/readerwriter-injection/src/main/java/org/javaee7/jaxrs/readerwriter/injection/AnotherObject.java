@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package org.javaee7.jaxrs.readerwriter.injection;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -22,5 +16,5 @@ public class AnotherObject {
     public void setValue(int value) {
         this.value = value;
     }
-    
+
 }

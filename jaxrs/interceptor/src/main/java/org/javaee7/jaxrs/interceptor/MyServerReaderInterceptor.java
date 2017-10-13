@@ -64,9 +64,9 @@ public class MyServerReaderInterceptor implements ReaderInterceptor {
             baos.write(c);
         }
         System.out.println("MyClientReaderInterceptor --> " + baos.toString());
-        
+
         ric.setInputStream(new ByteArrayInputStream(baos.toByteArray()));
-        
+
         return ric.proceed();
     }
 

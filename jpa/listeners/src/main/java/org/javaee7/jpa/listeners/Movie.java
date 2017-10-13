@@ -60,7 +60,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Movie.findAll", query = "SELECT m FROM Movie m"),
     @NamedQuery(name = "Movie.findById", query = "SELECT m FROM Movie m WHERE m.id = :id"),
     @NamedQuery(name = "Movie.findByName", query = "SELECT m FROM Movie m WHERE m.name = :name"),
-    @NamedQuery(name = "Movie.findByActors", query = "SELECT m FROM Movie m WHERE m.actors = :actors")})
+    @NamedQuery(name = "Movie.findByActors", query = "SELECT m FROM Movie m WHERE m.actors = :actors") })
 @EntityListeners(MovieListener.class)
 public class Movie implements Serializable {
 
@@ -68,11 +68,11 @@ public class Movie implements Serializable {
     @Id
     @NotNull
     private Integer id;
-    
+
     @NotNull
     @Size(min = 1, max = 50)
     private String name;
-    
+
     @NotNull
     @Size(min = 1, max = 200)
     private String actors;
@@ -112,6 +112,25 @@ public class Movie implements Serializable {
 
     public void setActors(String actors) {
         this.actors = actors;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Movie movie = (Movie) o;
+
+        return id.equals(movie.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 
     @Override

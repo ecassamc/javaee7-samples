@@ -50,7 +50,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Arun Gupta
  */
-@WebServlet(urlPatterns = {"/UpgradeServlet"})
+@WebServlet(urlPatterns = { "/UpgradeServlet" })
 public class UpgradeServlet extends HttpServlet {
 
     /**
@@ -64,12 +64,12 @@ public class UpgradeServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpgradeServlet</title>");            
+            out.println("<title>Servlet UpgradeServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet UpgradeServlet at " + request.getContextPath() + "</h1>");
@@ -97,7 +97,7 @@ public class UpgradeServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -112,7 +112,7 @@ public class UpgradeServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         processRequest(request, response);
     }
 

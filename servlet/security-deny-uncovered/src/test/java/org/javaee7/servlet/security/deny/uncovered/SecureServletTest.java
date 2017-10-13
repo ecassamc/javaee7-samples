@@ -1,87 +1,111 @@
 package org.javaee7.servlet.security.deny.uncovered;
 
-import com.meterware.httpunit.AuthorizationRequiredException;
-import com.meterware.httpunit.GetMethodWebRequest;
-import com.meterware.httpunit.HttpException;
-import com.meterware.httpunit.PostMethodWebRequest;
-import com.meterware.httpunit.PutMethodWebRequest;
-import com.meterware.httpunit.WebConversation;
-import com.meterware.httpunit.WebResponse;
-import java.io.ByteArrayInputStream;
+import static com.gargoylesoftware.htmlunit.HttpMethod.POST;
+import static com.gargoylesoftware.htmlunit.HttpMethod.PUT;
+import static org.javaee7.ServerOperations.addUsersToContainerIdentityStore;
+import static org.jboss.shrinkwrap.api.ShrinkWrap.create;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.net.URL;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
+
+import com.gargoylesoftware.htmlunit.DefaultCredentialsProvider;
+import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
+import com.gargoylesoftware.htmlunit.TextPage;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.WebRequest;
 
 /**
  * @author Arun Gupta
  */
 @RunWith(Arquillian.class)
 public class SecureServletTest {
-    
-    private static final String WEBAPP_SRC = "src/main/webapp";
 
     @ArquillianResource
     private URL base;
-    
+
+    DefaultCredentialsProvider correctCreds = new DefaultCredentialsProvider();
+    DefaultCredentialsProvider incorrectCreds = new DefaultCredentialsProvider();
+    WebClient webClient;
+
     @Deployment(testable = false)
     public static WebArchive createDeployment() {
-        WebArchive war = ShrinkWrap.create(WebArchive.class).
-                addClass(SecureServlet.class).
-                addAsWebInfResource((new File(WEBAPP_SRC + "/WEB-INF", "web.xml")));
+        
+        addUsersToContainerIdentityStore();
+        
+        WebArchive war = create(WebArchive.class)
+            .addClass(SecureServlet.class)
+            .addAsWebInfResource((new File("src/main/webapp/WEB-INF/web.xml")));
+
+        System.out.println(war.toString(true));
+        
         return war;
+    }
+
+    @Before
+    public void setup() {
+        correctCreds.addCredentials("u1", "p1");
+        incorrectCreds.addCredentials("random", "random");
+        webClient = new WebClient();
+    }
+    
+    @After
+    public void tearDown() {
+        webClient.getCookieManager().clearCookies();
+        webClient.closeAllWindows();
     }
 
     @Test
     public void testGetMethod() throws Exception {
-        WebConversation conv = new WebConversation();
-        conv.setAuthentication("file", "u1", "p1");
-        GetMethodWebRequest getRequest = new GetMethodWebRequest(base + "/SecureServlet");
-        WebResponse response = null;
-        try {
-            response = conv.getResponse(getRequest);
-        } catch (AuthorizationRequiredException e) {
-            fail(e.getMessage());
-        }
-        assertNotNull(response);
-        assertTrue(response.getText().contains("<title>Servlet Security - Basic Auth with File-base Realm</title>"));
+        webClient.setCredentialsProvider(correctCreds);
+        TextPage page = webClient.getPage(base + "/SecureServlet");
+        assertEquals("my GET", page.getContent());
     }
 
     @Test
     public void testPostMethod() throws Exception {
-        WebConversation conv = new WebConversation();
-        conv.setAuthentication("file", "u1", "p1");
+        webClient.setCredentialsProvider(correctCreds);
+        WebRequest request = new WebRequest(new URL(base + "SecureServlet"), POST);
         
-        PostMethodWebRequest postRequest = new PostMethodWebRequest(base + "/SecureServlet");
         try {
-            conv.getResponse(postRequest);
-        } catch (HttpException e) {
-            assertEquals(403, e.getResponseCode());
+            TextPage p = webClient.getPage(request);
+            System.out.println(p.getContent());
+        } catch (FailingHttpStatusCodeException e) {
+            assertNotNull(e);
+            assertEquals(403, e.getStatusCode());
             return;
         }
-        fail("POST method could be called");
+        
+        fail("POST method could be called even with deny-uncovered-http-methods");
     }
 
     @Test
     public void testPutMethod() throws Exception {
-        WebConversation conv = new WebConversation();
-        conv.setAuthentication("file", "u1", "p1");
+        webClient.setCredentialsProvider(correctCreds);
+        WebRequest request = new WebRequest(new URL(base + "SecureServlet"), PUT);
         
-        byte[] bytes = new byte[10];
-        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-        PutMethodWebRequest putRequest = new PutMethodWebRequest(base + "/SecureServlet", bais, "text/plain");
+        System.out.println("\n\n**** After request");
+        
         try {
-            conv.getResponse(putRequest);
-        } catch (HttpException e) {
-            assertEquals(403, e.getResponseCode());
+            TextPage p = webClient.getPage(request);
+            System.out.println(p.getContent());
+        } catch (FailingHttpStatusCodeException e) {
+            assertNotNull(e);
+            assertEquals(403, e.getStatusCode());
             return;
         }
-        fail("PUT method could be called");
+        
+        fail("PUT method could be called even with deny-unocvered-http-methods");
     }
 }

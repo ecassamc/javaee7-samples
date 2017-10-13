@@ -52,13 +52,12 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Arun Gupta
  */
-@WebServlet(urlPatterns = {"/TestResourceServlet"})
+@WebServlet(urlPatterns = { "/TestResourceServlet" })
 public class TestResourceServlet extends HttpServlet {
 
-//    @Resource(name = "concurrent/myFactory")
+    //    @Resource(name = "concurrent/myFactory")
     @Resource(name = "DefaultManagedThreadFactory")
     ManagedThreadFactory factory;
-    
 
     /**
      * Processes requests for both HTTP
@@ -71,7 +70,7 @@ public class TestResourceServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             out.println("<html>");
@@ -104,7 +103,7 @@ public class TestResourceServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -119,7 +118,7 @@ public class TestResourceServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         processRequest(request, response);
     }
 

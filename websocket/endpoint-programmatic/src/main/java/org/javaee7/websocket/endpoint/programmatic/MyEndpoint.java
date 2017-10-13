@@ -69,7 +69,7 @@ public class MyEndpoint extends Endpoint {
                 }
             }
         });
-        
+
         session.addMessageHandler(new MessageHandler.Whole<ByteBuffer>() {
 
             @Override
@@ -82,7 +82,7 @@ public class MyEndpoint extends Endpoint {
                 }
             }
         });
-        
+
         session.addMessageHandler(new MessageHandler.Whole<PongMessage>() {
 
             @Override
@@ -90,7 +90,7 @@ public class MyEndpoint extends Endpoint {
                 System.out.println("PongMessage received: " + t.getApplicationData());
             }
         });
-        
+
     }
 
     @Override

@@ -41,6 +41,7 @@ package org.javaee7.ejb.stateful.remote;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -51,11 +52,14 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Arun Gupta
  */
-@WebServlet(urlPatterns = {"/TestServletWithInterface"})
+@WebServlet(urlPatterns = { "/TestServletWithInterface" })
 public class TestServlet extends HttpServlet {
+
+    private static final long serialVersionUID = 1L;
     
     // Cannot be injected using @Inject
-    @EJB Cart bean;
+    @EJB
+    Cart bean;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -66,14 +70,14 @@ public class TestServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
         try (PrintWriter out = response.getWriter()) {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Adding/Removing items from Stateful Bean (with Interface)</title>");            
+            out.println("<title>Adding/Removing items from Stateful Bean (with Interface)</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Adding/Removing items from Stateful Bean (with Interface)</h1>");
@@ -107,7 +111,7 @@ public class TestServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -121,7 +125,7 @@ public class TestServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         processRequest(request, response);
     }
 

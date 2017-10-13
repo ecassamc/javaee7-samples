@@ -60,9 +60,9 @@ import org.javaee7.jms.send.receive.Resources;
 public class MessageSenderAsync {
 
     @Inject
-//    @JMSConnectionFactory("java:comp/DefaultJMSConnectionFactory")
+    //    @JMSConnectionFactory("java:comp/DefaultJMSConnectionFactory")
     JMSContext context;
-        
+
     @Resource(lookup = Resources.ASYNC_QUEUE)
     Queue asyncQueue;
 
@@ -90,7 +90,6 @@ public class MessageSenderAsync {
         } catch (RuntimeException e) {
             System.out.println("Caught RuntimeException trying to invoke setAsync - not permitted in Java EE");
         }
-
 
         context.createProducer().send(asyncQueue, message);
     }

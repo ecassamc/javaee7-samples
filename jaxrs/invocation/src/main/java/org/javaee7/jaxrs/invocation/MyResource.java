@@ -59,7 +59,7 @@ public class MyResource {
         System.out.println("get");
         return "foobar";
     }
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public void post(@FormParam("name") String name, @FormParam("age") int age) {

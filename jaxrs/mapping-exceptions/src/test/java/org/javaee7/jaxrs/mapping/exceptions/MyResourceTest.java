@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package org.javaee7.jaxrs.mapping.exceptions;
 
 import static org.junit.Assert.assertEquals;
@@ -36,21 +30,22 @@ public class MyResourceTest {
 
     @Deployment(testable = false)
     public static WebArchive createDeployment() {
-       return ShrinkWrap.create(WebArchive.class)
-             .addClasses(
-                   MyApplication.class, MyResource.class,
-                   OrderNotFoundException.class, OrderNotFoundExceptionMapper.class);
+        return ShrinkWrap.create(WebArchive.class)
+            .addClasses(
+                MyApplication.class, MyResource.class,
+                OrderNotFoundException.class, OrderNotFoundExceptionMapper.class);
     }
+
     @ArquillianResource
     private URL base;
 
     private WebTarget target;
-    
+
     @Before
     public void setUp() throws MalformedURLException {
         Client client = ClientBuilder.newClient();
         target = client
-                .target(URI.create(new URL(base, "webresources/order").toExternalForm()));
+            .target(URI.create(new URL(base, "webresources/order").toExternalForm()));
     }
 
     /**
@@ -61,7 +56,7 @@ public class MyResourceTest {
         String response = target.path("1").request().get(String.class);
         assertEquals("1", response);
     }
-    
+
     /**
      * Test of getOrder method, of class MyResource.
      */
@@ -74,7 +69,7 @@ public class MyResourceTest {
         } catch (Exception e) {
             fail(e.getMessage());
         }
-            
+
     }
-    
+
 }

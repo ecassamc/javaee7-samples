@@ -1,113 +1,115 @@
 package org.javaee7.servlet.security.basicauth.omission;
 
-import com.meterware.httpunit.AuthorizationRequiredException;
-import com.meterware.httpunit.GetMethodWebRequest;
-import com.meterware.httpunit.PostMethodWebRequest;
-import com.meterware.httpunit.WebConversation;
-import com.meterware.httpunit.WebResponse;
+import static com.gargoylesoftware.htmlunit.HttpMethod.POST;
+import static org.javaee7.ServerOperations.addUsersToContainerIdentityStore;
+import static org.jboss.shrinkwrap.api.ShrinkWrap.create;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.net.URL;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
+
+import com.gargoylesoftware.htmlunit.DefaultCredentialsProvider;
+import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
+import com.gargoylesoftware.htmlunit.TextPage;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.WebRequest;
 
 /**
  * @author Arun Gupta
  */
 @RunWith(Arquillian.class)
 public class SecureServletTest {
-    
+
     private static final String WEBAPP_SRC = "src/main/webapp";
 
     @ArquillianResource
     private URL base;
-    
+
+    private WebClient webClient;
+    private DefaultCredentialsProvider correctCreds = new DefaultCredentialsProvider();
+    private DefaultCredentialsProvider incorrectCreds = new DefaultCredentialsProvider();
+
     @Deployment(testable = false)
     public static WebArchive createDeployment() {
-        WebArchive war = ShrinkWrap.create(WebArchive.class).
-                addClass(SecureServlet.class).
-                addAsWebInfResource((new File(WEBAPP_SRC + "/WEB-INF", "web.xml")));
-        return war;
+        
+        addUsersToContainerIdentityStore();
+        
+        return create(WebArchive.class)
+                .addClass(SecureServlet.class)
+                .addAsWebInfResource((new File(WEBAPP_SRC + "/WEB-INF", "web.xml")));
+    }
+
+    @Before
+    public void setup() {
+        webClient = new WebClient();
+        correctCreds.addCredentials("u1", "p1");
+        incorrectCreds.addCredentials("random", "random");
+    }
+    
+    @After
+    public void tearDown() {
+        webClient.getCookieManager().clearCookies();
+        webClient.closeAllWindows();
     }
 
     @Test
     public void testGetWithCorrectCredentials() throws Exception {
-        WebConversation conv = new WebConversation();
-        conv.setAuthentication("file", "u1", "p1");
-        GetMethodWebRequest getRequest = new GetMethodWebRequest(base + "/SecureServlet");
-        WebResponse response = null;
-        try {
-            response = conv.getResponse(getRequest);
-        } catch (AuthorizationRequiredException e) {
-            fail(e.getMessage());
-        }
-        assertNotNull(response);
-        assertTrue(response.getText().contains("<title>Servlet Security - Basic Auth with File-base Realm</title>"));
+        webClient.setCredentialsProvider(correctCreds);
+        TextPage page = webClient.getPage(base + "/SecureServlet");
+        
+        assertEquals("my GET", page.getContent());
     }
 
     @Test
     public void testGetWithIncorrectCredentials() throws Exception {
-        WebConversation conv = new WebConversation();
-        conv.setAuthentication("file", "u", "p1");
-        GetMethodWebRequest getRequest = new GetMethodWebRequest(base + "/SecureServlet");
+        webClient.setCredentialsProvider(incorrectCreds);
+        
         try {
-            conv.getResponse(getRequest);
-        } catch (AuthorizationRequiredException e) {
+            webClient.getPage(base + "/SecureServlet");
+        } catch (FailingHttpStatusCodeException e) {
             assertNotNull(e);
+            assertEquals(401, e.getStatusCode());
             return;
         }
+        
         fail("/SecureServlet could be accessed without proper security credentials");
-    }    
+    }
 
     @Test
-    public void testSPostWithNoCredentials() throws Exception {
-        WebConversation conv = new WebConversation();
-//        conv.setAuthentication("file", "u1", "p1");
-        PostMethodWebRequest getRequest = new PostMethodWebRequest(base + "/SecureServlet");
-        WebResponse response = null;
-        try {
-            response = conv.getResponse(getRequest);
-        } catch (AuthorizationRequiredException e) {
-            fail(e.getMessage());
-        }
-        assertNotNull(response);
-        assertTrue(response.getText().contains("<title>Servlet Security - Basic Auth with File-base Realm</title>"));
+    public void testPostWithNoCredentials() throws Exception {
+        WebRequest request = new WebRequest(new URL(base + "SecureServlet"), POST);
+        TextPage page = webClient.getPage(request);
+        
+        assertEquals("my POST", page.getContent());
     }
 
     @Test
     public void testPostWithCorrectCredentials() throws Exception {
-        WebConversation conv = new WebConversation();
-        conv.setAuthentication("file", "u1", "p1");
-        PostMethodWebRequest getRequest = new PostMethodWebRequest(base + "/SecureServlet");
-        WebResponse response = null;
-        try {
-            response = conv.getResponse(getRequest);
-        } catch (AuthorizationRequiredException e) {
-            fail(e.getMessage());
-        }
-        assertNotNull(response);
-        assertTrue(response.getText().contains("<title>Servlet Security - Basic Auth with File-base Realm</title>"));
+        webClient.setCredentialsProvider(correctCreds);
+        WebRequest request = new WebRequest(new URL(base + "SecureServlet"), POST);
+        TextPage page = webClient.getPage(request);
+        
+        assertEquals("my POST", page.getContent());
     }
-    
 
     @Test
     public void testPostWithIncorrectCredentials() throws Exception {
-        WebConversation conv = new WebConversation();
-        conv.setAuthentication("file", "random", "random");
-        PostMethodWebRequest getRequest = new PostMethodWebRequest(base + "/SecureServlet");
-        WebResponse response = null;
-        try {
-            response = conv.getResponse(getRequest);
-        } catch (AuthorizationRequiredException e) {
-            fail(e.getMessage());
-        }
-        assertNotNull(response);
-        assertTrue(response.getText().contains("<title>Servlet Security - Basic Auth with File-base Realm</title>"));
+        webClient.setCredentialsProvider(incorrectCreds);
+        WebRequest request = new WebRequest(new URL(base + "SecureServlet"), POST);
+        TextPage page = webClient.getPage(request);
+        
+        assertEquals("my POST", page.getContent());
     }
-    
+
 }

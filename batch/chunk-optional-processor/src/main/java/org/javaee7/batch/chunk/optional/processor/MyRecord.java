@@ -44,9 +44,10 @@ package org.javaee7.batch.chunk.optional.processor;
  */
 public class MyRecord {
     private int id;
-            
-    public MyRecord() { }
-    
+
+    public MyRecord() {
+    }
+
     public MyRecord(int id) {
         this.id = id;
     }
@@ -58,7 +59,7 @@ public class MyRecord {
     public void setId(int id) {
         this.id = id;
     }
-    
+
     @Override
     public String toString() {
         return "MyInputRecord: " + id;

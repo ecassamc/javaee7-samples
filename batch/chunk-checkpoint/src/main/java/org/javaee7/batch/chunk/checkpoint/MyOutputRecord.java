@@ -44,9 +44,10 @@ package org.javaee7.batch.chunk.checkpoint;
  */
 public class MyOutputRecord {
     private int id;
-            
-    public MyOutputRecord() { }
-    
+
+    public MyOutputRecord() {
+    }
+
     public MyOutputRecord(int id) {
         this.id = id;
     }
@@ -58,7 +59,7 @@ public class MyOutputRecord {
     public void setId(int id) {
         this.id = id;
     }
-    
+
     @Override
     public String toString() {
         return "MyOutputRecord: " + id;

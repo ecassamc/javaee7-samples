@@ -39,6 +39,7 @@
  */
 package org.javaee7.jaxrs.readerwriter.injection;
 
+import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -47,17 +48,19 @@ import javax.ws.rs.Path;
  * @author Arun Gupta
  */
 @Path("fruits")
+@RequestScoped
 public class MyResource {
-    private final String[] RESPONSE = { "apple", "banana", "mango" };
     
+    private static final String[] RESPONSE = { "apple", "banana", "mango" };
+
     @POST
     @Consumes(MyObject.MIME_TYPE)
-    public String postWithCustomMimeType(MyObject mo) {
-        System.out.println("endpoint invoked (getFruit(" + mo.getIndex() + "))");
-        
-        return RESPONSE[Integer.valueOf(mo.getIndex()) % 3];
+    public String postWithCustomMimeType(MyObject myObject) {
+        System.out.println("endpoint invoked (getFruit(" + myObject.getIndex() + "))");
+
+        return RESPONSE[myObject.getIndex() % 3];
     }
-    
+
     @POST
     @Path("index")
     @Consumes("text/plain")

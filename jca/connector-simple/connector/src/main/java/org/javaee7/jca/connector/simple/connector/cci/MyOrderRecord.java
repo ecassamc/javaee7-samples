@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.javaee7.jca.connector.simple.connector.cci;
 
 import javax.resource.cci.Record;
@@ -12,7 +7,7 @@ import javax.resource.cci.Record;
  * @author arungup
  */
 public class MyOrderRecord implements Record {
-    
+
     private String data;
     private String name;
     private String description;
@@ -24,7 +19,7 @@ public class MyOrderRecord implements Record {
     public void setData(String data) {
         this.data = data;
     }
-    
+
     @Override
     public String getRecordName() {
         return name;
@@ -44,16 +39,16 @@ public class MyOrderRecord implements Record {
     public String getRecordShortDescription() {
         return description;
     }
-    
+
     @Override
     public Object clone() throws CloneNotSupportedException {
         super.clone();
-        
+
         MyOrderRecord record = new MyOrderRecord();
         record.setData(this.data);
         record.setRecordName(this.name);
         record.setRecordShortDescription(this.description);
         return record;
     }
-    
+
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.javaee7.jaxrs.filter;
 
 import static org.junit.Assert.assertEquals;
@@ -33,8 +28,8 @@ public class MyResourceTest {
 
     @Deployment(testable = false)
     public static WebArchive createDeployment() {
-       return ShrinkWrap.create(WebArchive.class)
-             .addClasses(MyApplication.class, MyResource.class, ServerLoggingFilter.class);
+        return ShrinkWrap.create(WebArchive.class)
+            .addClasses(MyApplication.class, MyResource.class, ServerLoggingFilter.class);
     }
 
     private WebTarget target;
@@ -56,8 +51,8 @@ public class MyResourceTest {
     public void testGetFruit() {
         String result = target.request().get(String.class);
         assertEquals("Likely that the headers set in the filter were not available in endpoint",
-                "apple",
-                result);
+            "apple",
+            result);
     }
 
     /**
@@ -67,8 +62,8 @@ public class MyResourceTest {
     public void testPostFruit() {
         String result = target.request().post(Entity.text("apple"), String.class);
         assertEquals("Likely that the headers set in the filter were not available in endpoint",
-                "apple",
-                result);
+            "apple",
+            result);
     }
 
 }

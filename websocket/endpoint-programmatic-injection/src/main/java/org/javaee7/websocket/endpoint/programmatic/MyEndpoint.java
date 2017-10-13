@@ -52,8 +52,9 @@ import javax.websocket.Session;
  * @author Arun Gupta
  */
 public class MyEndpoint extends Endpoint {
-    
-    @Inject MyBean bean;
+
+    @Inject
+    MyBean bean;
 
     @Override
     public void onOpen(final Session session, EndpointConfig ec) {

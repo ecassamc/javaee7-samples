@@ -55,7 +55,7 @@ public class Figure {
     public Figure(JsonObject json) {
         this.json = json;
     }
-    
+
     public JsonObject getJson() {
         return json;
     }
@@ -63,7 +63,7 @@ public class Figure {
     public void setJson(JsonObject json) {
         this.json = json;
     }
-    
+
     @Override
     public String toString() {
         StringWriter writer = new StringWriter();

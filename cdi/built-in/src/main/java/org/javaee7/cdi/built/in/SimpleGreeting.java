@@ -58,17 +58,22 @@ import javax.transaction.UserTransaction;
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
 public class SimpleGreeting implements Greeting {
-    
-    @Inject HttpServletRequest httpServletRequest;
-    
-    @Inject HttpSession httpSession;
-    
-    @Inject ServletContext servletContext;
-    
-    @Inject UserTransaction ut;
-    
-    @Inject Principal principal;
-    
+
+    @Inject
+    HttpServletRequest httpServletRequest;
+
+    @Inject
+    HttpSession httpSession;
+
+    @Inject
+    ServletContext servletContext;
+
+    @Inject
+    UserTransaction ut;
+
+    @Inject
+    Principal principal;
+
     @Override
     public String greet(String name) {
         try {
@@ -82,5 +87,5 @@ public class SimpleGreeting implements Greeting {
         }
         return "Hello " + name;
     }
-    
+
 }

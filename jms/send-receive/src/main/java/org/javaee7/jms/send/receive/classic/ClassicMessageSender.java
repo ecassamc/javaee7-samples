@@ -60,7 +60,7 @@ public class ClassicMessageSender {
 
     @Resource(lookup = "java:comp/DefaultJMSConnectionFactory")
     ConnectionFactory connectionFactory;
-    
+
     @Resource(mappedName = Resources.CLASSIC_QUEUE)
     Queue demoQueue;
 

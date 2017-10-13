@@ -59,7 +59,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Movie.findAll", query = "SELECT m FROM Movie m"),
     @NamedQuery(name = "Movie.findById", query = "SELECT m FROM Movie m WHERE m.id = :id"),
     @NamedQuery(name = "Movie.findByName", query = "SELECT m FROM Movie m WHERE m.name = :name"),
-    @NamedQuery(name = "Movie.findByActors", query = "SELECT m FROM Movie m WHERE m.actors = :actors")})
+    @NamedQuery(name = "Movie.findByActors", query = "SELECT m FROM Movie m WHERE m.actors = :actors") })
 public class Movie implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -69,11 +69,11 @@ public class Movie implements Serializable {
     @NotNull
     @Size(min = 1, max = 50)
     private String name;
-    
+
     @NotNull
     @Size(min = 1, max = 200)
     private String actors;
-    
+
     public Movie() {
     }
 
@@ -115,5 +115,5 @@ public class Movie implements Serializable {
     public String toString() {
         return name;
     }
-    
+
 }

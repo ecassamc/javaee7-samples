@@ -54,6 +54,6 @@ import javax.interceptor.InterceptorBinding;
 @Inherited
 @InterceptorBinding
 @Retention(RUNTIME)
-@Target({CONSTRUCTOR, METHOD, TYPE})
+@Target({ CONSTRUCTOR, METHOD, TYPE })
 public @interface MyAroundConstructInterceptorBinding {
 }

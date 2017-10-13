@@ -48,9 +48,10 @@ import javax.inject.Named;
 public class Name {
     private String first;
     private String last;
-    
-    public Name() { }
-    
+
+    public Name() {
+    }
+
     public Name(String first, String last) {
         this.first = first;
         this.last = last;
@@ -71,7 +72,7 @@ public class Name {
     public void setLast(String last) {
         this.last = last;
     }
-    
+
     public String toString() {
         return last + ", " + first;
     }

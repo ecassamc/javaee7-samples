@@ -49,7 +49,7 @@ import javax.inject.Named;
 @Named
 @SessionScoped
 public class ContractsBean implements Serializable {
-    
+
     String contract = "red";
 
     public String getContract() {

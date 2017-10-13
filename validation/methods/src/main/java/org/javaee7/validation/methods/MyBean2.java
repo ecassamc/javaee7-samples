@@ -59,7 +59,6 @@ public class MyBean2 {
         this.value = value;
     }
 
-
     public MyParameter getValue() {
         return value;
     }

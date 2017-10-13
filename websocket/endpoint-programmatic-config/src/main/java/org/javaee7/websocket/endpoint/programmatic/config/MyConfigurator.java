@@ -87,5 +87,4 @@ public class MyConfigurator extends ServerEndpointConfig.Configurator {
         return super.getNegotiatedSubprotocol(supported, requested);
     }
 
-    
 }

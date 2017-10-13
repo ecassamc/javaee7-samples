@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package org.javaee7.ejb.async;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -37,20 +31,19 @@ public class AsyncMethodBeanTest {
     @Deployment
     public static WebArchive createDeployment() {
         File[] jars = Maven.resolver().loadPomFromFile("pom.xml")
-                .resolve("com.jayway.awaitility:awaitility")
-                .withTransitivity().asFile();
+            .resolve("com.jayway.awaitility:awaitility")
+            .withTransitivity().asFile();
 
         return ShrinkWrap.create(WebArchive.class)
-                .addAsLibraries(jars)
-                .addClasses(MyAsyncBeanMethodLevel.class)
-                .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
+            .addAsLibraries(jars)
+            .addClasses(MyAsyncBeanMethodLevel.class)
+            .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
     }
 
     @Test
     public void should_return_async_sum() throws ExecutionException, InterruptedException {
         final Integer numberOne = 5;
         final Integer numberTwo = 10;
-
 
         long start = System.currentTimeMillis();
         final Future<Integer> resultFuture = bean.addNumbers(numberOne, numberTwo);

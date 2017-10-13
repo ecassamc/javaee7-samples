@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.javaee7.jaxrs.readerwriter.injection;
 
 import static org.junit.Assert.assertEquals;
@@ -34,7 +29,7 @@ public class MyResourceTest {
 
     Client client;
     WebTarget target;
-    
+
     @ArquillianResource
     URL base;
 
@@ -53,14 +48,14 @@ public class MyResourceTest {
     @Deployment(testable = false)
     public static WebArchive createDeployment() {
         WebArchive war = ShrinkWrap.create(WebArchive.class)
-                .addClasses(
-                        MyApplication.class, 
-                        MyResource.class,
-                        MyObject.class,
-                        MyReader.class,
-                        MyWriter.class,
-                        AnotherObject.class);
-        
+            .addClasses(
+                MyApplication.class,
+                MyResource.class,
+                MyObject.class,
+                MyReader.class,
+                MyWriter.class,
+                AnotherObject.class);
+
         System.out.println(war.toString(true));
         return war;
     }
@@ -68,17 +63,17 @@ public class MyResourceTest {
     @Test
     public void testPostWithCustomMimeTypeAndInjectedBeanInReader() {
         String fruit = target
-                .request()
-                .post(Entity.entity(new MyObject(1), MyObject.MIME_TYPE), String.class);
+            .request()
+            .post(Entity.entity(new MyObject(1), MyObject.MIME_TYPE), String.class);
         assertEquals("mango", fruit);
     }
 
     @Test
     public void testPostSimple() {
         String fruit = target
-                .path("index")
-                .request()
-                .post(Entity.text("1"), String.class);
+            .path("index")
+            .request()
+            .post(Entity.text("1"), String.class);
         assertEquals("banana", fruit);
     }
 

@@ -58,10 +58,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author arungup
  */
-@WebServlet(urlPatterns = {"/ScheduleServlet"})
+@WebServlet(urlPatterns = { "/ScheduleServlet" })
 public class ScheduleServlet extends HttpServlet {
 
-//    @Resource(name = "concurrent/myScheduledExecutor2")
+    //    @Resource(name = "concurrent/myScheduledExecutor2")
     @Resource(name = "DefaultManagedScheduledExecutorService")
     ManagedScheduledExecutorService executor;
 
@@ -76,7 +76,7 @@ public class ScheduleServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             out.println("<!DOCTYPE html>");
@@ -97,7 +97,7 @@ public class ScheduleServlet extends HttpServlet {
                 }
             }
             out.println("Callable Task completed: " + future.get().getId());
-            
+
             out.println("<h2>Scheduling tasks using Runnable</h2>");
             ScheduledFuture<?> f = executor.schedule(new MyRunnableTask(10), 5, TimeUnit.SECONDS);
             while (true) {
@@ -129,7 +129,7 @@ public class ScheduleServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -144,7 +144,7 @@ public class ScheduleServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         processRequest(request, response);
     }
 

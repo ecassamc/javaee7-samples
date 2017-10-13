@@ -33,20 +33,24 @@ public class TestLifecycleAuthModule implements ServerAuthModule {
 
     @Override
     public void initialize(MessagePolicy requestPolicy, MessagePolicy responsePolicy, CallbackHandler handler,
-            @SuppressWarnings("rawtypes") Map options) throws AuthException {
+        @SuppressWarnings("rawtypes") Map options) throws AuthException {
         this.handler = handler;
     }
 
     @Override
     public AuthStatus validateRequest(MessageInfo messageInfo, Subject clientSubject, Subject serviceSubject)
-            throws AuthException {
+        throws AuthException {
 
         HttpServletResponse response = (HttpServletResponse) messageInfo.getResponseMessage();
 
         try {
             response.getWriter().write("validateRequest invoked\n");
+            
+            boolean isMandatory = Boolean.valueOf((String) messageInfo.getMap().get("javax.security.auth.message.MessagePolicy.isMandatory"));
+            
+            response.getWriter().write("isMandatory: " + isMandatory + "\n");
 
-            handler.handle(new Callback[] { 
+            handler.handle(new Callback[] {
                 new CallerPrincipalCallback(clientSubject, "test"),
                 new GroupPrincipalCallback(clientSubject, new String[] { "architect" }) });
         } catch (IOException | UnsupportedCallbackException e) {

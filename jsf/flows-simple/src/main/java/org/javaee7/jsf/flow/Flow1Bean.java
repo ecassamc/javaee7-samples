@@ -1,5 +1,3 @@
-package org.javaee7.jsf.flow;
-
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
@@ -39,7 +37,7 @@ package org.javaee7.jsf.flow;
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-
+package org.javaee7.jsf.flow;
 
 import java.io.Serializable;
 import javax.faces.flow.FlowScoped;
@@ -59,7 +57,7 @@ public class Flow1Bean implements Serializable {
     public String getName() {
         return this.getClass().getSimpleName();
     }
-    
+
     public String getHomeAction() {
         return "/index";
     }

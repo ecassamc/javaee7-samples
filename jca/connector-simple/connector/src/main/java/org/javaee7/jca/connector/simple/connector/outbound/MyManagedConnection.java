@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.javaee7.jca.connector.simple.connector.outbound;
 
 import java.io.FileNotFoundException;
@@ -25,13 +20,13 @@ import javax.transaction.xa.XAResource;
  * @author arungup
  */
 public class MyManagedConnection implements ManagedConnection {
-    
+
     private static final Logger LOGGER = Logger.getLogger("MyManagedConnection");
-    
+
     private MyConnection connection;
-    
+
     FileOutputStream fos;
-    
+
     public MyManagedConnection(String file) {
         try {
             fos = new FileOutputStream(file);
@@ -100,5 +95,5 @@ public class MyManagedConnection implements ManagedConnection {
     public PrintWriter getLogWriter() throws ResourceException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

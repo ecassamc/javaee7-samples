@@ -69,7 +69,7 @@ public class MyEndpoint extends Endpoint {
                 }
             }
         });
-        
+
         session.addMessageHandler(new MessageHandler.Partial<ByteBuffer>() {
 
             @Override

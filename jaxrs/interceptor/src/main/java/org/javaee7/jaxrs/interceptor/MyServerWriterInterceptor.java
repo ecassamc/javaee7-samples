@@ -59,7 +59,7 @@ public class MyServerWriterInterceptor implements WriterInterceptor {
         wic.setOutputStream(new FilterOutputStream(wic.getOutputStream()) {
 
             final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            
+
             @Override
             public void write(int b) throws IOException {
                 baos.write(b);
@@ -73,7 +73,6 @@ public class MyServerWriterInterceptor implements WriterInterceptor {
             }
         });
 
-        
         wic.proceed();
     }
 

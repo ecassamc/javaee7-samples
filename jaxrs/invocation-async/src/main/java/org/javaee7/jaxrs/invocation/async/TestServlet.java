@@ -61,7 +61,7 @@ import javax.ws.rs.core.Response;
 /**
  * @author Arun Gupta
  */
-@WebServlet(urlPatterns = {"/TestServlet"})
+@WebServlet(urlPatterns = { "/TestServlet" })
 public class TestServlet extends HttpServlet {
 
     /**
@@ -75,7 +75,7 @@ public class TestServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         out.println("<html>");
@@ -87,11 +87,11 @@ public class TestServlet extends HttpServlet {
         out.println("Initializing client...<br>");
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://"
-                + request.getServerName()
-                + ":"
-                + request.getServerPort()
-                + request.getContextPath()
-                + "/webresources/resource");
+            + request.getServerName()
+            + ":"
+            + request.getServerPort()
+            + request.getContextPath()
+            + "/webresources/resource");
 
         // GET
         out.print("Building a GET request ...<br>");
@@ -117,7 +117,6 @@ public class TestServlet extends HttpServlet {
             Logger.getLogger(TestServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-
         out.println("... done.<br>");
 
         out.println("</body>");
@@ -136,7 +135,7 @@ public class TestServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -151,7 +150,7 @@ public class TestServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         processRequest(request, response);
     }
 

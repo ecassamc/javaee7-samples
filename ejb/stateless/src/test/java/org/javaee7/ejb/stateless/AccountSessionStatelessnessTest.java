@@ -2,7 +2,6 @@ package org.javaee7.ejb.stateless;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.junit.InSequence;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -21,20 +20,18 @@ import static org.hamcrest.Matchers.*;
 @RunWith(Arquillian.class)
 public class AccountSessionStatelessnessTest {
 
-    final private float deposit_amount = 10f;
-
     @EJB
     AccountSessionBean account1;
 
     @EJB
     AccountSessionBean account2;
 
-	@Deployment
-	public static Archive<?> deployment() {
-		return ShrinkWrap.create(JavaArchive.class, "test.jar")
-				.addClass(AccountSessionBean.class)
-				.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
-	}
+    @Deployment
+    public static Archive<?> deployment() {
+        return ShrinkWrap.create(JavaArchive.class, "test.jar")
+            .addClass(AccountSessionBean.class)
+            .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
+    }
 
     /**
      * JSR 318: Enterprise JavaBeans, Version 3.1
@@ -46,25 +43,7 @@ public class AccountSessionStatelessnessTest {
      * stateless session bean have the same object identity.
      */
     @Test
-    @InSequence(1)
     public void should_be_identical_beans() {
         assertThat("Expect same instances", account1, is(account2));
     }
-
-	@Test
-    @InSequence(2)
-	public void should_deposit_amount_on_first_account() {
-        assertThat(account1.getAmount(), is(equalTo(0f)));
-
-        String actual = account1.deposit(deposit_amount);
-
-        assertThat(actual, is(equalTo("Deposited: " + deposit_amount)));
-        assertThat(account1.getAmount(), is(equalTo(deposit_amount)));
-	}
-
-	@Test
-    @InSequence(3)
-	public void should_contain_already_deposited_amount_on_second_account() {
-        assertThat(account2.getAmount(), is(equalTo(deposit_amount)));
-	}
 }

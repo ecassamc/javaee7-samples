@@ -64,10 +64,10 @@ public class CartBean {
         items.remove(item);
     }
 
-    public void purchase() { 
+    public void purchase() {
         //. . .
     }
-    
+
     public List<String> getItems() {
         return items;
     }

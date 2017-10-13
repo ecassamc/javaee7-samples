@@ -53,7 +53,7 @@ import javax.ws.rs.client.WebTarget;
 /**
  * @author Arun Gupta
  */
-@WebServlet(urlPatterns = {"/TestServlet"})
+@WebServlet(urlPatterns = { "/TestServlet" })
 public class TestServlet extends HttpServlet {
 
     /**
@@ -67,7 +67,7 @@ public class TestServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         out.println("<html>");
@@ -78,24 +78,24 @@ public class TestServlet extends HttpServlet {
         out.println("<h1>Request Binding</h1>");
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://"
-                + request.getServerName()
-                + ":"
-                + request.getServerPort()
-                + request.getContextPath()
-                + "/webresources/persons");
+            + request.getServerName()
+            + ":"
+            + request.getServerPort()
+            + request.getContextPath()
+            + "/webresources/persons");
 
         out.print("GETTing @CookieParam ...<br>");
         out.print(target.request().get(String.class));
-        
+
         out.print("<br><br>GETTing @MatrixParam ...<br>");
         out.print(target.path("matrix")
-                .matrixParam("start", "5")
-                .matrixParam("end", "10")
-                .request().get(String.class));
-        
+            .matrixParam("start", "5")
+            .matrixParam("end", "10")
+            .request().get(String.class));
+
         out.print("<br><br>GETTing @Context ...<br>");
         out.print(target.path("context").request().get(String.class));
-        
+
         out.println("<br>... done.<br>");
 
         out.println("</body>");
@@ -114,7 +114,7 @@ public class TestServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -129,7 +129,7 @@ public class TestServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         processRequest(request, response);
     }
 

@@ -52,18 +52,23 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author arungup
  */
-@WebServlet(urlPatterns = {"/ServerServlet"})
+@WebServlet(urlPatterns = { "/ServerServlet" })
 public class ServerServlet extends HttpServlet {
 
-    @Inject MyRequestScopedBean requestBean;
-    @Inject MyRequestScopedBean requestBean2;
-    
-    @Inject MySessionScopedBean sessionBean;
-    @Inject MySessionScopedBean sessionBean2;
-    
-    @Inject MyApplicationScopedBean applicationBean;
-    @Inject MySingletonScopedBean singletonBean;
-    
+    @Inject
+    MyRequestScopedBean requestBean;
+    @Inject
+    MyRequestScopedBean requestBean2;
+
+    @Inject
+    MySessionScopedBean sessionBean;
+    @Inject
+    MySessionScopedBean sessionBean2;
+
+    @Inject
+    MyApplicationScopedBean applicationBean;
+    @Inject
+    MySingletonScopedBean singletonBean;
 
     /**
      * Processes requests for both HTTP
@@ -76,7 +81,7 @@ public class ServerServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         try (PrintWriter out = response.getWriter()) {
             out.println("<b>Request-scoped bean</b>");
             out.println("<br><br>(1): " + requestBean.getID());
@@ -101,7 +106,7 @@ public class ServerServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -116,7 +121,7 @@ public class ServerServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         processRequest(request, response);
     }
 

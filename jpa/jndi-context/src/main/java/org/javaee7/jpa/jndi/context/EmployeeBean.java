@@ -56,9 +56,8 @@ import javax.persistence.PersistenceContext;
 @PersistenceContext(name = "persistence/myJNDI", unitName = "MyPU")
 @Stateless
 public class EmployeeBean {
+    private EntityManager em;
 
-    EntityManager em;
-    
     @PostConstruct
     public void postConstruct() {
         try {
@@ -68,7 +67,7 @@ public class EmployeeBean {
             Logger.getLogger(EmployeeBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public List<Employee> get() {
         return em.createNamedQuery("Employee.findAll", Employee.class).getResultList();
     }

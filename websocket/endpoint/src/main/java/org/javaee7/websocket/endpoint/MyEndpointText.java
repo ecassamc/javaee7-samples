@@ -47,7 +47,7 @@ import javax.websocket.server.ServerEndpoint;
  */
 @ServerEndpoint("/text")
 public class MyEndpointText {
-    
+
     @OnMessage
     public String echoText(String name) {
         return name;

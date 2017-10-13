@@ -54,29 +54,26 @@ import javax.inject.Named;
 public class MyItemReader extends AbstractItemReader {
     public static int totalReaders = 0;
     private int readerId;
-    
+
     private StringTokenizer tokens;
-    
+
     @Inject
     @BatchProperty(name = "start")
     private String startProp;
-    
+
     @Inject
     @BatchProperty(name = "end")
     private String endProp;
-    
+
     @Inject
     private JobContext context;
-    
+
     @Override
     public void open(Serializable e) {
-//        Properties jobParams = BatchRuntime.getJobOperator().getParameters(context.getExecutionId());
-//        int start = (Integer)jobParams.get("start");
-//        int end = (Integer)jobParams.get("end");
         int start = new Integer(startProp);
         int end = new Integer(endProp);
         StringBuilder builder = new StringBuilder();
-        for (int i=start; i<=end; i++) {
+        for (int i = start; i <= end; i++) {
             builder.append(i);
             if (i < end)
                 builder.append(",");
@@ -85,7 +82,7 @@ public class MyItemReader extends AbstractItemReader {
         readerId = ++totalReaders;
         tokens = new StringTokenizer(builder.toString(), ",");
     }
-    
+
     @Override
     public MyInputRecord readItem() {
         if (tokens.hasMoreTokens()) {

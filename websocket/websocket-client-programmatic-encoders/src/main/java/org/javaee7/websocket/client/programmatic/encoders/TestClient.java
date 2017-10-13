@@ -63,7 +63,7 @@ import javax.websocket.WebSocketContainer;
 /**
  * @author Arun Gupta
  */
-@WebServlet(urlPatterns = {"/TestClient"})
+@WebServlet(urlPatterns = { "/TestClient" })
 public class TestClient extends HttpServlet {
 
     /**
@@ -77,32 +77,32 @@ public class TestClient extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet TestServlet</title>");            
+            out.println("<title>Servlet TestServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet TestServlet at " + request.getContextPath() + "</h1>");
-            
+
             List<Class<? extends Encoder>> encoders = new ArrayList<>();
             encoders.add(MyMessageEncoder.class);
             List<Class<? extends Decoder>> decoders = new ArrayList<>();
             decoders.add(MyMessageDecoder.class);
 
             WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-            String uri = "ws://localhost:8080" + request.getContextPath() + "/websocket";
+            String uri = "ws://localhost:" + request.getLocalPort() + request.getContextPath() + "/websocket";
             out.println("Connecting to " + uri);
-            container.connectToServer(MyClient.class, 
-                    ClientEndpointConfig.Builder.create()
+            container.connectToServer(MyClient.class,
+                ClientEndpointConfig.Builder.create()
                     .encoders(encoders)
                     .decoders(decoders)
                     .build(),
-                    URI.create(uri));
+                URI.create(uri));
             out.println("<br><br>Look in server.log for message exchange between client/server.");
-            
+
             out.println("</body>");
             out.println("</html>");
         } catch (DeploymentException ex) {
@@ -122,7 +122,7 @@ public class TestClient extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -137,7 +137,7 @@ public class TestClient extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         processRequest(request, response);
     }
 

@@ -39,14 +39,14 @@
  */
 package org.javaee7.batch.chunk.exception;
 
+import java.io.Serializable;
+
 /**
  * @author Arun Gupta
  */
-public class MyOutputRecord {
+public class MyOutputRecord implements Serializable {
     private int id;
-            
-    public MyOutputRecord() { }
-    
+
     public MyOutputRecord(int id) {
         this.id = id;
     }
@@ -58,16 +58,13 @@ public class MyOutputRecord {
     public void setId(int id) {
         this.id = id;
     }
-    
-    @Override
-    public String toString() {
-        return "MyOutputRecord: " + id;
-    }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         MyOutputRecord that = (MyOutputRecord) o;
 
@@ -77,5 +74,10 @@ public class MyOutputRecord {
     @Override
     public int hashCode() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "MyOutputRecord: " + id;
     }
 }

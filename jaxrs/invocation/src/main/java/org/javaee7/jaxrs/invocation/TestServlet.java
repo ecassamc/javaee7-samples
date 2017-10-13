@@ -58,7 +58,7 @@ import javax.ws.rs.core.MultivaluedHashMap;
 /**
  * @author Arun Gupta
  */
-@WebServlet(urlPatterns = {"/TestServlet"})
+@WebServlet(urlPatterns = { "/TestServlet" })
 public class TestServlet extends HttpServlet {
 
     /**
@@ -72,7 +72,7 @@ public class TestServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         out.println("<html>");
@@ -84,17 +84,17 @@ public class TestServlet extends HttpServlet {
         out.println("Initializing client...<br>");
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://"
-                + request.getServerName()
-                + ":"
-                + request.getServerPort()
-                + request.getContextPath()
-                + "/webresources/resource");
+            + request.getServerName()
+            + ":"
+            + request.getServerPort()
+            + request.getContextPath()
+            + "/webresources/resource");
 
         // GET
         out.print("Building a GET request ...<br>");
         Invocation i1 = target.request().buildGet();
         out.print("GET request ready ...<br>");
-        
+
         // POST
         out.print("Building a POST request...<br>");
         MultivaluedHashMap<String, String> map = new MultivaluedHashMap<>();
@@ -102,16 +102,16 @@ public class TestServlet extends HttpServlet {
         map.add("age", "17");
         Invocation i2 = target.request().buildPost(Entity.form(map));
         out.print("POSTed request ready...<br>");
-        
+
         Collection<Invocation> is = Arrays.asList(i1, i2);
-        
+
         for (Invocation i : is) {
             i.invoke();
             System.out.println("Request invoked");
         }
 
         out.println("... done.<br>");
-        
+
         out.println("</body>");
         out.println("</html>");
     }
@@ -128,7 +128,7 @@ public class TestServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -143,7 +143,7 @@ public class TestServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         processRequest(request, response);
     }
 

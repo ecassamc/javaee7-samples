@@ -47,7 +47,7 @@ import javax.websocket.server.ServerEndpoint;
  */
 @ServerEndpoint("/websocket-float")
 public class MyEndpointFloat {
-    
+
     @OnMessage
     public float echoFloat(Float f) {
         System.out.println("echoFloat");

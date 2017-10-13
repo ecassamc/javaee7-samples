@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package org.javaee7.jpa.converter;
 
 import javax.persistence.AttributeConverter;
@@ -24,5 +18,5 @@ public class CreditCardConverter implements AttributeConverter<CreditCard, Strin
     public CreditCard convertToEntityAttribute(String card) {
         return new CreditCard(card);
     }
-    
+
 }

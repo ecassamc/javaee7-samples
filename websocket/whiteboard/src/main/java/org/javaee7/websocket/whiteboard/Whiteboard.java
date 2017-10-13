@@ -40,10 +40,13 @@
 package org.javaee7.websocket.whiteboard;
 
 import java.io.IOException;
+import java.lang.invoke.MethodHandles;
 import java.nio.ByteBuffer;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.websocket.EncodeException;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
@@ -55,15 +58,19 @@ import javax.websocket.server.ServerEndpoint;
  * @author Arun Gupta
  */
 @ServerEndpoint(value = "/websocket",
-        encoders = {FigureEncoder.class},
-        decoders = {FigureDecoder.class})
+    encoders = { FigureEncoder.class },
+    decoders = { FigureDecoder.class })
 public class Whiteboard {
 
-    private static final Set<Session> peers = Collections.synchronizedSet(new HashSet<Session>());
+    private static final Logger LOGGER = Logger.getLogger(Whiteboard.class.getName());
+
+    private static final Object PRESENT = new Object();
+
+    private static final ConcurrentMap<Session, Object> peers = new ConcurrentHashMap<>();
 
     @OnOpen
     public void onOpen(Session peer) {
-        peers.add(peer);
+        peers.put(peer, PRESENT);
     }
 
     @OnClose
@@ -73,8 +80,9 @@ public class Whiteboard {
 
     @OnMessage
     public void broadcastFigure(Figure figure, Session session) throws IOException, EncodeException {
-        System.out.println("boradcastFigure: " + figure);
-        for (Session peer : peers) {
+        LOGGER.log(Level.INFO, "boradcastFigure: {0}", figure);
+        for (Session peer : session.getOpenSessions()) {
+            //        for (Session peer : peers.keySet()) {
             if (!peer.equals(session)) {
                 peer.getBasicRemote().sendObject(figure);
             }
@@ -83,8 +91,9 @@ public class Whiteboard {
 
     @OnMessage
     public void broadcastSnapshot(ByteBuffer data, Session session) throws IOException {
-        System.out.println("broadcastBinary: " + data);
-        for (Session peer : peers) {
+        LOGGER.log(Level.INFO, "broadcastBinary: {0}", data);
+        for (Session peer : session.getOpenSessions()) {
+            //        for (Session peer : peers.keySet()) {
             if (!peer.equals(session)) {
                 peer.getBasicRemote().sendBinary(data);
             }

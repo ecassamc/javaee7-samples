@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.javaee7.jaxrs.dynamicfilter;
 
 import static org.junit.Assert.assertEquals;
@@ -31,14 +26,14 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class MyResourceTest {
 
-    @Deployment(testable=false)
+    @Deployment(testable = false)
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class)
-                .addClasses(
-                        MyApplication.class,
-                        MyResource.class,
-                        DynamicServerLogggingFilterFeature.class,
-                        ServerLoggingFilter.class);
+            .addClasses(
+                MyApplication.class,
+                MyResource.class,
+                DynamicServerLogggingFilterFeature.class,
+                ServerLoggingFilter.class);
     }
 
     private WebTarget target;

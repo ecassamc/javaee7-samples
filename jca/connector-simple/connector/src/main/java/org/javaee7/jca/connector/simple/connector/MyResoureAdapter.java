@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.javaee7.jca.connector.simple.connector;
 
 import java.util.logging.Logger;
@@ -19,7 +14,7 @@ import javax.transaction.xa.XAResource;
  * @author arungup
  */
 public class MyResoureAdapter implements ResourceAdapter {
-    
+
     private static final Logger LOGGER = Logger.getLogger("MyResourceAdapter");
 
     @Override
@@ -46,5 +41,5 @@ public class MyResoureAdapter implements ResourceAdapter {
     public XAResource[] getXAResources(ActivationSpec[] specs) throws ResourceException {
         return null;
     }
-    
+
 }

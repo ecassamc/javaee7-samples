@@ -67,10 +67,10 @@ public class CartBeanWithInterface implements Cart {
     }
 
     @Override
-    public void purchase() { 
+    public void purchase() {
         //. . .
     }
-    
+
     @Override
     public List<String> getItems() {
         return items;
